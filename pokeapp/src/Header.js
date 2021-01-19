@@ -25,8 +25,12 @@ export default function Header() {
           </div>
 
           <Form className="d-flex mt-2">
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-info">Search</Button>
+            <FormControl
+              type="text"
+              placeholder="Pesquisar pokemon"
+              className="mr-sm-2"
+            />
+            <Button variant="outline-info">Pesquisar</Button>
           </Form>
         </Container>
       </Navbar>
