@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <h1>Home</h1>
+      <div class="container mt-4">Home</div>
     </>
   );
 }

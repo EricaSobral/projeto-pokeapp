@@ -7,7 +7,9 @@ export default function Header() {
     <>
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid py-2 d-flex flex-column flex-md-row align-items-center">
-          <a className="navbar-brand">PokeApp</a>
+          <Link to="/" className="navbar-brand pokeapp">
+            PokeApp
+          </Link>
           <div className="mt-2 d-flex flex-wrap">
             <Link to="/" className="navbar-brand">
               Pokemons
