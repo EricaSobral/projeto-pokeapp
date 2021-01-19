@@ -1,37 +1,35 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl';
 
 export default function Header() {
   return (
     <>
-      <nav className="navbar navbar-light bg-light">
-        <div className="container-fluid py-2 d-flex flex-column flex-md-row align-items-center">
-          <Link to="/" className="navbar-brand pokeapp">
-            PokeApp
+      <Navbar expand="lg" variant="light" bg="light">
+        <Container className="d-flex justify-content-around align-center py-2">
+          <Link to="/">
+            <Navbar.Brand>PokeApp</Navbar.Brand>
           </Link>
-          <div className="mt-2 d-flex flex-wrap">
-            <Link to="/" className="navbar-brand">
-              Pokemons
-            </Link>
-            <Link to="/meuspokemons" className="navbar-brand">
-              Meus Pokemons
-            </Link>
 
-            <form class="d-flex">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Pesquisar pokemon"
-                aria-label="Pesquisar"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Pesquisar
-              </button>
-            </form>
+          <div>
+            <Link to="/">
+              <Navbar.Brand>Home</Navbar.Brand>
+            </Link>
+            <Link to="/meuspokemons">
+              <Navbar.Brand>Meus pokemons</Navbar.Brand>
+            </Link>
           </div>
-        </div>
-      </nav>
+
+          <Form className="d-flex mt-2">
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-info">Search</Button>
+          </Form>
+        </Container>
+      </Navbar>
     </>
   );
 }

@@ -6,7 +6,7 @@ export default function MeusPokemons() {
   return (
     <>
       <Header />
-      <div class="container mt-4">Meus Pokemons</div>
+      <div className="container mt-4">Meus Pokemons</div>
     </>
   );
 }
