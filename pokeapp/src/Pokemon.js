@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
+import './teste.css'
 
 const Type = ({types}) => {
     return (
@@ -22,16 +24,24 @@ const Pokemon = ({name, url}) => {
     }
 
     return (
-        <div className="PokemonItem">
-            <h1>#{id} - {name}</h1>
-            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`} alt="Imagem Pokemon" />
-            {types.map(item => (
+        <div className="PokemonItem my-2">
+    <MDBCol>
+      <MDBCard style={{ width: "22rem" }}>
+        <MDBCardImage className="img-fluid" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`} waves />
+        <MDBCardBody>
+          <MDBCardTitle>{id} - {name}</MDBCardTitle>
+          <MDBCardText style={{height:"4rem" }}>
+          {types.map(item => (
                 <Type
                 key={item.type.name}
                 types={item.type.name}/>
             ))}
-        </div>
+          </MDBCardText>    
+        <MDBBtn color="primary" className="btn-pokemon">Default</MDBBtn>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
+     </div>
     )
 }
-
 export default Pokemon;
