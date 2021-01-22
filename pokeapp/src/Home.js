@@ -65,7 +65,7 @@ export default function Home() {
 
   useEffect(() => {
     const filteredPokemons = allPokemons.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(pesquisar)
+      pokemon.name.toLowerCase().includes(pesquisar.toLowerCase())
     );
     setPokemons(filteredPokemons);
   }, [pesquisar]);

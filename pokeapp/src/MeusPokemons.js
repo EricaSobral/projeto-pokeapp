@@ -61,7 +61,7 @@ export default function MeusPokemons() {
     let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
     
     const filteredPokemons = storagePokemons.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(pesquisar)
+      pokemon.name.toLowerCase().includes(pesquisar.toLowerCase())
     );
     
     setMyPokemon(filteredPokemons);
