@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header';
-import Pokemon from "./Pokemon";
+import Header from '../components/header/Header';
+import Pokemon from "../components/pokemon/Pokemon";
 import Pagination from '@material-ui/lab/Pagination';
-import LoadingScreen from './Loading';
+import LoadingScreen from '../components/Loading/Loading';
+import Footer from '../components/footer/Footer';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
+import CardDeck from 'react-bootstrap/Card';
 
-import Footer from './Footer';
+import PokemonImgTitle from '../assets/image/pokemon-logo-1.png';
 
 export default function Home() {
   
@@ -63,8 +65,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="container mt-4 d-flex justify-content-between">
-        <h2>Home</h2>
+      <div className="HeaderPage container mt-4 d-flex justify-content-between">
+        <div>
+          <img
+            className="PageHomeImg"
+            src={ PokemonImgTitle }
+            alt="Loading Image"
+          />
+        </div>
         <Form className="d-flex mt-2">
           <FormControl
             type="text"
@@ -77,19 +85,23 @@ export default function Home() {
           <Button variant="outline-info">Pesquisar</Button>
         </Form>
       </div>
+      <CardDeck class="cardDeckPersonalized">
       {loading === false ? (
       <div className="pokemon-cards d-flex flex-wrap">
-        {pokemons.map(item => (
-          <Pokemon
-            key={item.name}
-            name={item.name} 
-            url={item.url} 
-            />
-        ))}
+        
+          {pokemons.map(item => (
+            <Pokemon
+              key={item.name}
+              name={item.name} 
+              url={item.url} 
+              />
+          ))}
+        
       </div>
       ) : (
       <LoadingScreen />
       )}
+      </CardDeck>
       <Pagination 
         count={ (totalPages) ? totalPages : 1 } 
         variant="outlined" 

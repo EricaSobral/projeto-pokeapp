@@ -6,8 +6,7 @@ const Footer = () => {
       <div id="footer__identify">
         <p className="footer__identify">
           We Can Code Academy
-        </p>
-        <p className="footer__identify">
+          <br />
           Equipe 06 - Desafio PokeApp
         </p>  
       </div>

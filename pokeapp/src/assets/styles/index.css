@@ -12,21 +12,49 @@ code {
     monospace;
 }
 
+.HeaderPage {
+  margin: 2rem 0;
+}
+
+.PageHomeImg{
+  margin-left: 3rem;
+  width: 8rem;
+  height: 3rem;
+}
+
+.PageMeusPokemonsImg{
+  margin-left: 3rem;
+  width: 16rem;
+  height: 3rem;
+}
+
 .pokeapp {
   font-size: 30px;
   color: #111;
   font-weight: bold;
 }
+.pokemonName {
+  text-align: center;
+  font-style: normal;
+  font-weight: bolder;
+}
 
+.cardFooterAlign {
+  text-align: center;
+}
 
 .pokemon-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
+.btn-action{
+  margin: 0.32rem 0;
+}
+/*
 .PokemonItem {
-  flex: 1 0 21%; /* explanation below */
+  flex: 1 0 21%; 
   margin: 0.25rem;
   border: solid #999 0.05em;
   padding: 0.25rem;
@@ -35,7 +63,10 @@ code {
 
 .PokemonItem img {
   width: 15rem;
+  max-width: 10rem;
 }
+
+*/
 
 .footer{
   width: 100%;
@@ -48,6 +79,14 @@ code {
   margin: 1rem 0;
 }
 
-.footer__identify{
+.footer__identify {
   font-size: 70%;
+  padding: 0px;
+  margin: 0px;
+  color: #999;
+}
+
+.card {
+  border: none;
+  margin: 0.25rem;
 }

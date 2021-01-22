@@ -1,13 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header';
-import Pokemon from "./Pokemon";
-import Pagination from '@material-ui/lab/Pagination';
+import Header from '../components/header/Header';
+import Pokemon from "../components/pokemon/Pokemon";
+import Footer from '../components/footer/Footer';
 
+import Pagination from '@material-ui/lab/Pagination';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
+import CardDeck from 'react-bootstrap/Card';
 
-import Footer from './Footer';
+//import PokemonImgTitle from 'https://fontmeme.com/permalink/210122/dd0e934e729f2c29be9b04e6aa1c890e.png';
+
+function verifyStorage(){
+  if (localStorage.getItem('meusPokemons') === null) {
+    localStorage.setItem('meusPokemons', JSON.stringify([]));
+  } 
+}
+
+function getMyPokemonsActiveList(){
+  verifyStorage();
+
+  //capturando dados no storage
+  let pokemonsCaptured = JSON.parse(localStorage.getItem('meusPokemons'));
+
+  let filteredActivePokemons = pokemonsCaptured.filter((pokemon) =>
+    pokemon.status === true
+  );
+
+  return filteredActivePokemons;
+}
+
 
 export default function MeusPokemons() {
 
@@ -17,24 +39,23 @@ export default function MeusPokemons() {
   const handleChangePage = (event, value) => {
     let rangeSelected = ((value-1) <= 0) ? 0 : value - 1;
     
-    getMyPokemonList(rangeSelected);
+    getMyPokemon(rangeSelected);
   };
   
   const [myPokemon, setMyPokemon] = useState([]);
 
   useEffect( () => {
-    getMyPokemonList();
+    getMyPokemon();
   }, [] );
 
-  const getMyPokemonList = async (page) => {
+  const getMyPokemon = async (page) => {
     let initialItem = (page && page.length > 0) ? page : 0;
     let finalItem = (page && page.length > 0) ? (page+1) * LIMIT_ITENS_PER_PAGE : LIMIT_ITENS_PER_PAGE;
-    if (localStorage.getItem('meusPokemons') === null) {
-      localStorage.setItem('meusPokemons', JSON.stringify([]));
-    }
-    let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
     
-    console.log(JSON.stringify(myPokemon));
+    verifyStorage();
+
+    let storagePokemons = getMyPokemonsActiveList();
+    
     let myPokemonFiltered = storagePokemons.slice(initialItem, finalItem);
     
     let numberOfPages = Math.ceil(storagePokemons.length/LIMIT_ITENS_PER_PAGE);  
@@ -53,12 +74,9 @@ export default function MeusPokemons() {
   };
 
   useEffect(() => {
+    verifyStorage();
 
-    if (localStorage.getItem('meusPokemons') === null) {
-      localStorage.setItem('meusPokemons', JSON.stringify([]));
-    }
-
-    let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
+    let storagePokemons = getMyPokemonsActiveList();
     
     const filteredPokemons = storagePokemons.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(pesquisar.toLowerCase())
@@ -73,7 +91,19 @@ export default function MeusPokemons() {
     <>
       <Header />
       <div className="container mt-4 d-flex justify-content-between">
-        <h2>Meus Pokemons</h2>
+      <div>
+          <img
+            className="PageMeusPokemonsImg"
+            src='https://fontmeme.com/permalink/210122/dd0e934e729f2c29be9b04e6aa1c890e.png'
+            alt="Loading Image"
+          />
+        </div>
+       
+        <h2>
+        
+        </h2>
+
+        
         <Form className="d-flex mt-2">
           <FormControl
             type="text"
@@ -86,15 +116,17 @@ export default function MeusPokemons() {
           <Button variant="outline-info">Pesquisar</Button>
         </Form>
       </div>
-      <div className="pokemon-cards d-flex flex-wrap">
-        {myPokemon.map(item => (
-          <Pokemon
-            key={item.name}
-            name={item.name} 
-            url={item.url} 
-          />
-        ))}
-      </div>
+      <CardDeck class="cardDeckPersonalized">
+        <div className="pokemon-cards d-flex flex-wrap">
+          {myPokemon.map(item => (
+            <Pokemon
+              key={item.name}
+              name={item.name} 
+              url={item.url} 
+            />
+          ))}
+        </div>
+      </CardDeck>
       <Pagination 
         count={ (totalPages) ? totalPages : 1 } 
         variant="outlined" 
