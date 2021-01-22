@@ -29,6 +29,9 @@ export default function MeusPokemons() {
   const getMyPokemonList = async (page) => {
     let initialItem = (page && page.length > 0) ? page : 0;
     let finalItem = (page && page.length > 0) ? (page+1) * LIMIT_ITENS_PER_PAGE : LIMIT_ITENS_PER_PAGE;
+    if (localStorage.getItem('meusPokemons') === null) {
+      localStorage.setItem('meusPokemons', JSON.stringify([]));
+    }
     let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
     
     console.log(JSON.stringify(myPokemon));
@@ -58,7 +61,7 @@ export default function MeusPokemons() {
     let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
     
     const filteredPokemons = storagePokemons.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(pesquisar)
+      pokemon.name.toLowerCase().includes(pesquisar.toLowerCase())
     );
     
     setMyPokemon(filteredPokemons);
