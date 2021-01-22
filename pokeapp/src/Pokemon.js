@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import LoadingScreen from './Loading';
 
 const Type = ({ types }) => {
   return <div className="PokemonType">{types}</div>;
@@ -8,10 +9,12 @@ const Type = ({ types }) => {
 const Pokemon = ({ name, url }) => {
   const [types, setTypes] = useState([]);
   const [id, setId] = useState(1);
+  const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
     getAttributeList();
+    setTimeout(() => setLoading(false), 1)
   }, []);
 
   const getAttributeList = async () => {
@@ -55,19 +58,20 @@ const Pokemon = ({ name, url }) => {
   }
 
   return (
-    <div className="PokemonItem" key={id}>
-      <h1>
-        #{id} - {name}
-      </h1>
-      <img
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
-        alt="Imagem Pokemon"
-        width="150"
-        height="150"
-      />
-      {types.map((item) => (
-        <Type key={item.type.name} types={item.type.name} />
-      ))}
+    <>
+    {loading === false ? (
+        <div className="PokemonItem" key={id}>
+        <h1>
+          #{id} - {name}
+        </h1>
+        <img
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+          alt="Imagem Pokemon"
+          width="130"
+        />
+        {types.map((item) => (
+          <Type key={item.type.name} types={item.type.name} />
+        ))}
       <Button 
         variant="primary" 
         id={id} 
@@ -77,7 +81,11 @@ const Pokemon = ({ name, url }) => {
         {"Capturar"} 
       </Button>
     </div>
-  );
-};
+  ):(
+    <LoadingScreen/>
+  )}
+  </>
+)
+}
 
 export default Pokemon;
