@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button'
 
 const Type = ({ types }) => {
   return <div className="PokemonType">{types}</div>;
@@ -7,6 +8,7 @@ const Type = ({ types }) => {
 const Pokemon = ({ name, url }) => {
   const [types, setTypes] = useState([]);
   const [id, setId] = useState(1);
+
 
   useEffect(() => {
     getAttributeList();
@@ -22,20 +24,33 @@ const Pokemon = ({ name, url }) => {
   // capturar pokemon
 
   function handleButtonClick(event) {
-    let meusPokemonsURL = url;
-    //meusPokemons.name = name;
-    //meusPokemons.url = url;
-
+    let meusPokemonsURL = {
+        name,
+        url
+    };
+    
     if (localStorage.getItem('meusPokemons') === null) {
       localStorage.setItem('meusPokemons', JSON.stringify([meusPokemonsURL]));
     } else {
-      localStorage.setItem(
-        'meusPokemons',
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem('meusPokemons')),
-          meusPokemonsURL,
-        ])
-      );
+      //capturando dados no storage
+      let myPokemons = JSON.parse(localStorage.getItem('meusPokemons'));
+      
+      //verificando se já existe pokemon cadastrado com esse nome
+      let pokemonName = myPokemons.findIndex(item => item.name === name);
+
+      //validando o pokemon já foi capturado
+      if(pokemonName < 0){
+        localStorage.setItem(
+          'meusPokemons',
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem('meusPokemons')),
+            meusPokemonsURL,
+          ])
+        );
+
+      }
+
+      
     }
   }
 
@@ -53,9 +68,14 @@ const Pokemon = ({ name, url }) => {
       {types.map((item) => (
         <Type key={item.type.name} types={item.type.name} />
       ))}
-      <button id={id} onClick={handleButtonClick}>
-        Salvar
-      </button>
+      <Button 
+        variant="primary" 
+        id={id} 
+        onClick={handleButtonClick} 
+        className="btn-capturar"
+      >
+        {"Capturar"} 
+      </Button>
     </div>
   );
 };
