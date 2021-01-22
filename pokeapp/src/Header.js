@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import FormControl from 'react-bootstrap/FormControl';
 
 export default function Header() {
   return (
@@ -14,7 +11,6 @@ export default function Header() {
           <Link to="/">
             <Navbar.Brand>PokeApp</Navbar.Brand>
           </Link>
-
           <div>
             <Link to="/">
               <Navbar.Brand>Home</Navbar.Brand>
@@ -23,15 +19,6 @@ export default function Header() {
               <Navbar.Brand>Meus pokemons</Navbar.Brand>
             </Link>
           </div>
-
-          <Form className="d-flex mt-2">
-            <FormControl
-              type="text"
-              placeholder="Pesquisar pokemon"
-              className="mr-sm-2"
-            />
-            <Button variant="outline-info">Pesquisar</Button>
-          </Form>
         </Container>
       </Navbar>
     </>
