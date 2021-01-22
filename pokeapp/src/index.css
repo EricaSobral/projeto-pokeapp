@@ -17,3 +17,37 @@ code {
   color: #111;
   font-weight: bold;
 }
+
+
+.pokemon-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.PokemonItem {
+  flex: 1 0 21%; /* explanation below */
+  margin: 0.25rem;
+  border: solid #999 0.05em;
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.PokemonItem img {
+  width: 15rem;
+}
+
+.footer{
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #eee;
+  margin-top: 2rem;
+  text-align: center;
+}
+.Pagination{
+  margin: 1rem 0;
+}
+
+.footer__identify{
+  font-size: 70%;
+}
