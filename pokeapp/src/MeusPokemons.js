@@ -9,6 +9,27 @@ import FormControl from 'react-bootstrap/FormControl';
 
 import Footer from './Footer';
 
+
+function verifyStorage(){
+  if (localStorage.getItem('meusPokemons') === null) {
+    localStorage.setItem('meusPokemons', JSON.stringify([]));
+  } 
+}
+
+function getMyPokemonsActiveList(){
+  verifyStorage();
+
+  //capturando dados no storage
+  let pokemonsCaptured = JSON.parse(localStorage.getItem('meusPokemons'));
+
+  let filteredActivePokemons = pokemonsCaptured.filter((pokemon) =>
+    pokemon.status === true
+  );
+
+  return filteredActivePokemons;
+}
+
+
 export default function MeusPokemons() {
 
   const LIMIT_ITENS_PER_PAGE = 20;
@@ -17,24 +38,23 @@ export default function MeusPokemons() {
   const handleChangePage = (event, value) => {
     let rangeSelected = ((value-1) <= 0) ? 0 : value - 1;
     
-    getMyPokemonList(rangeSelected);
+    getMyPokemon(rangeSelected);
   };
   
   const [myPokemon, setMyPokemon] = useState([]);
 
   useEffect( () => {
-    getMyPokemonList();
+    getMyPokemon();
   }, [] );
 
-  const getMyPokemonList = async (page) => {
+  const getMyPokemon = async (page) => {
     let initialItem = (page && page.length > 0) ? page : 0;
     let finalItem = (page && page.length > 0) ? (page+1) * LIMIT_ITENS_PER_PAGE : LIMIT_ITENS_PER_PAGE;
-    if (localStorage.getItem('meusPokemons') === null) {
-      localStorage.setItem('meusPokemons', JSON.stringify([]));
-    }
-    let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
     
-    console.log(JSON.stringify(myPokemon));
+    verifyStorage();
+
+    let storagePokemons = getMyPokemonsActiveList();
+    
     let myPokemonFiltered = storagePokemons.slice(initialItem, finalItem);
     
     let numberOfPages = Math.ceil(storagePokemons.length/LIMIT_ITENS_PER_PAGE);  
@@ -53,12 +73,9 @@ export default function MeusPokemons() {
   };
 
   useEffect(() => {
+    verifyStorage();
 
-    if (localStorage.getItem('meusPokemons') === null) {
-      localStorage.setItem('meusPokemons', JSON.stringify([]));
-    }
-
-    let storagePokemons = JSON.parse(localStorage.getItem('meusPokemons'));
+    let storagePokemons = getMyPokemonsActiveList();
     
     const filteredPokemons = storagePokemons.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(pesquisar.toLowerCase())

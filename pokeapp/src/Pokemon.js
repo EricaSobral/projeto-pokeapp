@@ -6,11 +6,46 @@ const Type = ({ types }) => {
   return <div className="PokemonType">{types}</div>;
 };
 
-const Pokemon = ({ name, url }) => {
-  const [types, setTypes] = useState([]);
-  const [id, setId] = useState(1);
-  const [loading, setLoading] = useState(true)
 
+function getTypeStatus(value) {
+  switch(value) {
+    case true:
+      return 'Soltar';
+    case false:
+      return 'Indisponível';
+    default:
+      return 'Capturar';
+  }
+}
+
+function verifyStorage(){
+  if (localStorage.getItem('meusPokemons') === null) {
+    localStorage.setItem('meusPokemons', JSON.stringify([]));
+  } 
+}
+
+function getMyPokemonsList(){
+  verifyStorage();
+
+  //capturando dados no storage
+  let pokemonsCaptured = JSON.parse(localStorage.getItem('meusPokemons'));
+
+  return pokemonsCaptured;
+}
+
+function setMyPokemonsList( verifyStorage ){
+
+  localStorage.setItem(
+    'meusPokemons',
+    JSON.stringify(verifyStorage)
+  );
+}
+
+const Pokemon = ({ name, url }) => {
+  const [ types, setTypes ] = useState([]);
+  const [ id, setId ] = useState(1);
+  const [ loading, setLoading ] = useState(true);
+  const [ pokemonStatus, setPokemonStatus ] = useState('Carregando');
 
   useEffect(() => {
     getAttributeList();
@@ -18,43 +53,65 @@ const Pokemon = ({ name, url }) => {
   }, []);
 
   const getAttributeList = async () => {
+    getPokemonStatus();
     const response = await fetch(url);
     const data = await response.json();
     setId(data.id);
     setTypes(data.types);
   };
 
-  // capturar pokemon
+  
+  function getPokemonStatus() {
+    setPokemonStatus('Carregando');
 
-  function handleButtonClick(event) {
-    let meusPokemonsURL = {
-        name,
-        url
-    };
+    //capturando dados no storage
+    let myPokemons = getMyPokemonsList();
     
-    if (localStorage.getItem('meusPokemons') === null) {
-      localStorage.setItem('meusPokemons', JSON.stringify([meusPokemonsURL]));
+    //verificando se já existe pokemon cadastrado com esse nome
+    let pokemonId = myPokemons.findIndex(item => item.name === name);
+
+    let pokemonTextStatus = (pokemonId < 0) ? 
+      //pokemon não capturado
+      getTypeStatus(''):
+      //pokemon já capturado
+      getTypeStatus(myPokemons[pokemonId].status);
+
+      setPokemonStatus(pokemonTextStatus);
+  }
+
+  // capturar e soltar pokemon
+  // o pokemon só pode ser captura e solto uma vez
+  function handleButtonClick(event) {
+    //capturando dados no storage
+    let pokemonsCaptured = getMyPokemonsList();
+
+    //verificando se já existe pokemon cadastrado com esse nome
+    let pokemonId = pokemonsCaptured.findIndex(item => item.name === name);
+
+    //validando o pokemon já foi capturado
+    if(pokemonId < 0){
+      //Pokemon não foi capturado
+      setPokemonStatus('Soltar');
+      
+      let meusPokemonsURL = {
+          name,
+          url,
+          status: true,
+      };
+
+      setMyPokemonsList([
+        ...pokemonsCaptured,
+        meusPokemonsURL,
+      ]);
+
     } else {
-      //capturando dados no storage
-      let myPokemons = JSON.parse(localStorage.getItem('meusPokemons'));
-      
-      //verificando se já existe pokemon cadastrado com esse nome
-      let pokemonName = myPokemons.findIndex(item => item.name === name);
-
-      //validando o pokemon já foi capturado
-      if(pokemonName < 0){
-        localStorage.setItem(
-          'meusPokemons',
-          JSON.stringify([
-            ...JSON.parse(localStorage.getItem('meusPokemons')),
-            meusPokemonsURL,
-          ])
-        );
-
-      }
-
-      
+      //Pokemon já catpurado
+      //Soltando Pokemon
+      pokemonsCaptured[pokemonId].status = false;
+      setMyPokemonsList(pokemonsCaptured);
     }
+
+    getPokemonStatus();
   }
 
   return (
@@ -72,18 +129,23 @@ const Pokemon = ({ name, url }) => {
         {types.map((item) => (
           <Type key={item.type.name} types={item.type.name} />
         ))}
-      <Button 
-        variant="primary" 
-        id={id} 
-        onClick={handleButtonClick} 
-        className="btn-capturar"
-      >
-        {"Capturar"} 
-      </Button>
-    </div>
-  ):(
-    <LoadingScreen/>
-  )}
+        <Button 
+          variant={
+            {
+            'Soltar': 'dark',
+            'Indisponível': 'light'
+            }[pokemonStatus]
+          }
+          id={id} 
+          onClick={handleButtonClick} 
+          className="btn-action"
+        >
+          { pokemonStatus } 
+        </Button>
+      </div>
+    ):(
+      <LoadingScreen/>
+    )}
   </>
 )
 }
