@@ -46,17 +46,6 @@ export default function Home() {
     setPokemons(data.results);
   };
 
-  const getAllPokemonsList = async (max) => {
-    let limite = (max) ? max : 5000;
-    let urlLinkAllPokemons = APP_URL + `?limite=${limite}`;
-
-    const response = await fetch(urlLinkAllPokemons);
-    const data = await response.json();
-
-    setAllPokemons(data.results);
-  };
-
-
   // funcao de filtro dos Pokemons
   const [pesquisar, setPesquisar] = useState('');
   const handleChange = (event) => {
@@ -65,7 +54,7 @@ export default function Home() {
 
   useEffect(() => {
     const filteredPokemons = allPokemons.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(pesquisar)
+      pokemon.name.toLowerCase().includes(pesquisar.toLowerCase())
     );
     setPokemons(filteredPokemons);
   }, [pesquisar]);
