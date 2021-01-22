@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header';
-import Pokemon from "./Pokemon";
-import Pagination from '@material-ui/lab/Pagination';
+import Header from '../components/header/Header';
+import Pokemon from "../components/pokemon/Pokemon";
+import Footer from '../components/footer/Footer';
 
+import Pagination from '@material-ui/lab/Pagination';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
+import CardDeck from 'react-bootstrap/Card';
 
-import Footer from './Footer';
-
+//import PokemonImgTitle from 'https://fontmeme.com/permalink/210122/dd0e934e729f2c29be9b04e6aa1c890e.png';
 
 function verifyStorage(){
   if (localStorage.getItem('meusPokemons') === null) {
@@ -91,7 +92,19 @@ export default function MeusPokemons() {
     <>
       <Header />
       <div className="container mt-4 d-flex justify-content-between">
-        <h2>Meus Pokemons</h2>
+      <div>
+          <img
+            className="PageMeusPokemonsImg"
+            src='https://fontmeme.com/permalink/210122/dd0e934e729f2c29be9b04e6aa1c890e.png'
+            alt="Loading Image"
+          />
+        </div>
+       
+        <h2>
+        
+        </h2>
+
+        
         <Form className="d-flex mt-2">
           <FormControl
             type="text"
@@ -104,15 +117,17 @@ export default function MeusPokemons() {
           <Button variant="outline-info">Pesquisar</Button>
         </Form>
       </div>
-      <div className="pokemon-cards d-flex flex-wrap">
-        {myPokemon.map(item => (
-          <Pokemon
-            key={item.name}
-            name={item.name} 
-            url={item.url} 
-          />
-        ))}
-      </div>
+      <CardDeck class="cardDeckPersonalized">
+        <div className="pokemon-cards d-flex flex-wrap">
+          {myPokemon.map(item => (
+            <Pokemon
+              key={item.name}
+              name={item.name} 
+              url={item.url} 
+            />
+          ))}
+        </div>
+      </CardDeck>
       <Pagination 
         count={ (totalPages) ? totalPages : 1 } 
         variant="outlined" 
