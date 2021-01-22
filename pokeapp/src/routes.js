@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-import Home from './Home';
-import MeusPokemons from './MeusPokemons';
+import Home from '../src/pages/Home';
+import MeusPokemons from '../src/pages/MeusPokemons';
 
 export default function Routes() {
   return (
