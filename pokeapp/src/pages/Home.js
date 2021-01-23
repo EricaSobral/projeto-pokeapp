@@ -43,7 +43,7 @@ export default function Home() {
     let numberOfPages = Math.ceil(data.count/LIMIT_ITENS_PER_PAGE);  
     setTotalPages(numberOfPages);
 
-    setAllPokemons(data.count);
+    getAllPokemonsList(data.count);
 
     setPokemons(data.results);
   };
