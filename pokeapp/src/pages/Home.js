@@ -30,6 +30,7 @@ export default function Home() {
   const [pokemons, setPokemons] = useState([]);
   const [allPokemons, setAllPokemons] = useState([]);
 
+
   useEffect( () => {
     getPokemonsList('');
     setTimeout(() => setLoading(false), 1);
@@ -43,9 +44,19 @@ export default function Home() {
     let numberOfPages = Math.ceil(data.count/LIMIT_ITENS_PER_PAGE);  
     setTotalPages(numberOfPages);
 
-    setAllPokemons(data.count);
+    getAllPokemonsList(data.count);
 
     setPokemons(data.results);
+  };
+
+  const getAllPokemonsList = async (max) => {
+    let limite = (max) ? max : 5000;
+    let urlLinkAllPokemons = APP_URL + `?limite=${limite}`;
+
+    const response = await fetch(urlLinkAllPokemons);
+    const data = await response.json();
+
+    setAllPokemons(data.results);
   };
 
   // funcao de filtro dos Pokemons
