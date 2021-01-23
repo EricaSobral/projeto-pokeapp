@@ -16,8 +16,18 @@ code {
   margin: 2rem 0;
 }
 
+.NavPages {
+  font-size: 130%;
+  margin: 0 1.5rem;
+}
+
+.NavePageIn {
+  font-weight: bolder;
+}
+
+
 .PageHomeImg{
-  margin-left: 3rem;
+  /*margin-left: 3rem;*/
   width: 8rem;
   height: 3rem;
 }
@@ -90,3 +100,4 @@ code {
   border: none;
   margin: 0.25rem;
 }
+

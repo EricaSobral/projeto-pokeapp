@@ -91,18 +91,6 @@ export default function MeusPokemons() {
     <>
       <Header />
       <div className="container mt-4 d-flex justify-content-between">
-      <div>
-          <img
-            className="PageMeusPokemonsImg"
-            src='https://fontmeme.com/permalink/210122/dd0e934e729f2c29be9b04e6aa1c890e.png'
-            alt="Loading Image"
-          />
-        </div>
-       
-        <h2>
-        
-        </h2>
-
         
         <Form className="d-flex mt-2">
           <FormControl
@@ -116,7 +104,7 @@ export default function MeusPokemons() {
           <Button variant="outline-info">Pesquisar</Button>
         </Form>
       </div>
-      <CardDeck class="cardDeckPersonalized">
+      <CardDeck className="cardDeckPersonalized">
         <div className="pokemon-cards d-flex flex-wrap">
           {myPokemon.map(item => (
             <Pokemon

@@ -120,9 +120,21 @@ const Pokemon = ({ name, url }) => {
     <>
     {loading === false ? (
       <Card 
-        bg='dark'
+        bg={
+          {
+          'Capturar': 'dark',
+          'Soltar': 'secondary',
+          'Indisponível': 'light'
+          }[pokemonStatus]
+        }
         key={id}
-        text='light'
+        text={
+          {
+          'Capturar': 'light',
+          'Soltar': 'light',
+          'Indisponível': 'dark'
+          }[pokemonStatus]
+        }
         style={{ width: '18rem' }}
         className="mb-2"
       >
@@ -140,14 +152,14 @@ const Pokemon = ({ name, url }) => {
           <small className="text-muted">#{id}</small>
             
           </Card.Title>
-  
-          <Card.Text>
-            {types.map((item) => (
-              <Type key={item.type.name} types={item.type.name} />
-            ))}
-          </Card.Text>
+          
+          {types.map((item) => (
+            <Type key={item.type.name} types={item.type.name} />
+          ))}
+          
         </Card.Body>
         <Card.Footer className="cardFooterAlign">
+          <div>
           {(pokemonStatus==='Soltar' || pokemonStatus==='Capturar') && (
               <Button 
               variant={
@@ -164,6 +176,9 @@ const Pokemon = ({ name, url }) => {
               { pokemonStatus.toUpperCase() } 
             </Button>
           )}
+          
+
+          </div>
           {pokemonStatus==='Indisponível' && (
             <div>
               <Alert key="dark" severity="info">
@@ -183,127 +198,3 @@ const Pokemon = ({ name, url }) => {
 }
 
 export default Pokemon;
-
-/*
-<>
-  {loading === false ? (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img 
-        variant="top" 
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
-        alt={"Imagem do Pokemon " + name }
-      />
-      <Card.Body>
-
-        <Card.Title>
-          <strong>{name}</strong>
-          #{id}
-        </Card.Title>
-
-        <Card.Text>
-          {types.map((item) => (
-            <Type key={item.type.name} types={item.type.name} />
-          ))}
-        </Card.Text>
-
-        {(pokemonStatus==='Soltar' || pokemonStatus==='Capturar') && (
-            <Button 
-            variant={
-              {
-              'Capturar': 'primary',
-              'Soltar': 'dark',
-              'Indisponível': 'light'
-              }[pokemonStatus]
-            }
-            id={id} 
-            onClick={handleButtonClick} 
-            className="btn-action"
-          >
-            { pokemonStatus } 
-          </Button>
-        )}
-        {pokemonStatus==='Indisponível' && (
-          <div className="teste">
-            <Alert key="light" severity="info" variant="outlined">
-              Pokemon já capturado.
-            </Alert>
-          </div>
-        )}
-
-      </Card.Body>
-    </Card>
-  ):(
-    <LoadingScreen/>
-  )}
-     
-</>
-
-*/
-
-
-/*
-return (
-    <>
-    {loading === false ? (
-        <div className="PokemonItem" key={id}>
-        <h1>
-          #{id} - {name}
-        </h1>
-        <img
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
-          alt="Imagem Pokemon"
-          width="130"
-        />
-        {types.map((item) => (
-          <Type key={item.type.name} types={item.type.name} />
-        ))}
-
-        {(pokemonStatus==='Soltar' || pokemonStatus==='Capturar') && (
-            <Button 
-            variant={
-              {
-              'Capturar': 'primary',
-              'Soltar': 'dark',
-              'Indisponível': 'light'
-              }[pokemonStatus]
-            }
-            id={id} 
-            onClick={handleButtonClick} 
-            className="btn-action"
-          >
-            { pokemonStatus } 
-          </Button>
-        )}
-        {pokemonStatus==='Indisponível' && (
-          <div className="teste">
-            <Alert key="light" severity="info" variant="outlined">
-              Pokemon já capturado.
-            </Alert>
-          </div>
-        )}
-
-        
-
-        
-      </div>
-    ):(
-      <LoadingScreen/>
-    )}
-  </>
-)
-
-
-
-
-
-///////////
-
-
-
-  <ListGroup className="list-group-flush">
-    <ListGroupItem>Cras justo odio</ListGroupItem>
-    <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-    <ListGroupItem>Vestibulum at eros</ListGroupItem>
-  </ListGroup>
-
-*/

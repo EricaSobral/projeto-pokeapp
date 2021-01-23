@@ -10,7 +10,6 @@ import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import CardDeck from 'react-bootstrap/Card';
 
-import PokemonImgTitle from '../assets/image/pokemon-logo-1.png';
 
 export default function Home() {
   
@@ -22,7 +21,8 @@ export default function Home() {
   const handleChangePage = (event, value) => {
     let rangeSelected = ((value-1) <= 0) ? 0 : value - 1;
     let offset = rangeSelected * LIMIT_ITENS_PER_PAGE;
-    let url_link = APP_URL + `?offset=${ offset }&limite=${LIMIT_ITENS_PER_PAGE}`;
+    let url_link = APP_URL + `?offset=${ offset }&limit=${LIMIT_ITENS_PER_PAGE}`;
+    console.log(url_link);
  
     getPokemonsList(url_link);
   };
@@ -50,8 +50,9 @@ export default function Home() {
   };
 
   const getAllPokemonsList = async (max) => {
+    console.log(max);
     let limite = (max) ? max : 5000;
-    let urlLinkAllPokemons = APP_URL + `?limite=${limite}`;
+    let urlLinkAllPokemons = APP_URL + `?limit=${limite}`;
 
     const response = await fetch(urlLinkAllPokemons);
     const data = await response.json();
@@ -75,15 +76,11 @@ export default function Home() {
 
   return (
     <>
-      <Header />
-      <div className="HeaderPage container mt-4 d-flex justify-content-between">
-        <div>
-          <img
-            className="PageHomeImg"
-            src={ PokemonImgTitle }
-            alt="Loading Image"
-          />
-        </div>
+      <Header 
+        pageName = "Home"
+      />
+      <div className="HeaderPage container mt-4 d-flex justify-content-end">
+          
         <Form className="d-flex mt-2">
           <FormControl
             type="text"
@@ -96,7 +93,7 @@ export default function Home() {
           <Button variant="outline-info">Pesquisar</Button>
         </Form>
       </div>
-      <CardDeck class="cardDeckPersonalized">
+      <CardDeck className="cardDeckPersonalized">
       {loading === false ? (
       <div className="pokemon-cards d-flex flex-wrap">
         
